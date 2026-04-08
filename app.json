@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Smart Parking POC",
+    "slug": "expo-iot-parking-dashboard",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "smartparking",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.phungnlg.smartparking",
+      "config": { "googleMapsApiKey": "REPLACE_ME" },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "We use your location to show nearby parking lots."
+      }
+    },
+    "android": {
+      "package": "com.phungnlg.smartparking",
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
+      "config": { "googleMaps": { "apiKey": "REPLACE_ME" } },
+      "adaptiveIcon": { "backgroundColor": "#0B1220" }
+    },
+    "plugins": [
+      "expo-router",
+      ["expo-location", { "locationAlwaysAndWhenInUsePermission": "We use your location to show nearby parking lots." }]
+    ]
+  }
+}
