@@ -1,6 +1,32 @@
 # expo-iot-parking-dashboard
 
-A React Native + Expo POC for a real-time smart parking mobile app. Demonstrates the full shape of a campus / smart-city parking product: live lot occupancy data streamed from an IoT backend (Axis P3748-PLVE AI camera style), a minimal driver-facing UI, maps, and an admin-style analytics drill-down.
+A React Native + Expo POC for a real-time smart parking mobile app. Demonstrates the full shape of a campus / smart-city parking product: live lot occupancy data streamed from an IoT backend (Axis P3748-PLVE AI camera style), a minimal driver-facing UI, and an admin-style analytics drill-down.
+
+## Demo
+
+![Demo](screenshots/demo.gif)
+
+Live occupancy feed updating in real time, lot detail with a 24h trend, and a campus-wide analytics dashboard.
+
+## Screenshots
+
+| Live dashboard | Lot detail | Analytics |
+| --- | --- | --- |
+| ![Dashboard](screenshots/01-dashboard.png) | ![Lot detail](screenshots/02-lot-detail.png) | ![Analytics](screenshots/03-analytics.png) |
+
+## App flow
+
+```mermaid
+flowchart TD
+    A[IoT gateway<br/>Axis camera occupancy] -->|WebSocket lot_update| B[liveFeed client]
+    A -.->|REST fallback poll 5s| B
+    B -->|merge by lotId| C[Zustand parkingStore]
+    C --> D[Dashboard<br/>nearest lots, live status]
+    D -->|tap lot| E[Lot detail<br/>open / occupied / reserved + 24h trend]
+    D -->|view analytics| F[Analytics<br/>campus utilization, peak hours]
+    B -->|disconnect| G[Exponential backoff<br/>1s..30s + heartbeat]
+    G --> B
+```
 
 ## Tech stack
 
@@ -26,7 +52,7 @@ A React Native + Expo POC for a real-time smart parking mobile app. Demonstrates
 
 ```
 app/
-  _layout.tsx, index.tsx (map), lot/[id].tsx (detail), analytics.tsx
+  _layout.tsx, index.tsx (dashboard list), lot/[id].tsx (detail), analytics.tsx
 src/
   store/       parkingStore (lots, live status, connection)
   services/    iotApi (REST client for Axis-style backend)
