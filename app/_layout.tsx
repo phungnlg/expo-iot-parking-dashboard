@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { useParkingStore } from '@/store/parkingStore';
 import { startLiveFeed, stopLiveFeed } from '@/services/liveFeed';
+import { C } from '@/theme';
 
 export default function RootLayout() {
   const bootstrap = useParkingStore((s) => s.bootstrap);
@@ -15,12 +16,14 @@ export default function RootLayout() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: '#0B1220' },
-          headerTintColor: '#FFFFFF',
-          contentStyle: { backgroundColor: '#0B1220' },
+          headerStyle: { backgroundColor: C.bg },
+          headerTintColor: C.primary,
+          headerTitleStyle: { fontWeight: '700', color: C.primary },
+          headerShadowVisible: false,
+          contentStyle: { backgroundColor: C.bg },
         }}
       >
         <Stack.Screen name="index" options={{ title: 'Campus Parking' }} />
